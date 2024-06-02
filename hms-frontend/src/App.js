@@ -1,12 +1,15 @@
 
 import './App.css';
 import './css/bootstrap/dist/css/bootstrap-grid.min.css'
-import Sidebar from './components/Sidebar';
+import Login from "./components/Login";
+// import Sidebar from './components/Sidebar';
+
 
 function App() {
   return (
       <div className="App">
-        <Sidebar/>
+      <Login/>
+        {/*<Sidebar/>*/}
       </div>
   );
 }
