@@ -5,8 +5,8 @@ import {ReactComponent as DashboardIcon } from '../assets/Inactive/dashboard.svg
 import {ReactComponent as DashboardIconActive } from '../assets/Active/dashboard.svg';
 import {ReactComponent as RoomIcon } from '../assets/Inactive/hotel.svg';
 import {ReactComponent as RoomIconActive } from '../assets/Active/hotel.svg';
-import {ReactComponent as AccountIcon } from '../assets/Inactive/account_balance.svg';
-import {ReactComponent as AccountIconActive } from '../assets/Active/account_balance.svg';
+import {ReactComponent as StockIcon } from '../assets/Inactive/store.svg';
+import {ReactComponent as StockIconActive } from '../assets/Active/store.svg';
 import {ReactComponent as UsersIcon } from '../assets/Inactive/people.svg';
 import {ReactComponent as UsersIconActive } from '../assets/Active/people.svg';
 import {ReactComponent as SettingsIcon } from '../assets/Inactive/settings.svg';
@@ -40,12 +40,12 @@ export default function Sidebar() {
                         {activeItem === 'rooms' ? <RoomIconActive className="sidebar-icon" />
                             : <RoomIcon className="sidebar-icon" />}
                         Rooms</a></li>
-                <li className={`sidebar-item ${activeItem === 'accounts'? 'active':''}`}
-                    onClick={()=>handleItemClick('accounts')}>
-                    <a href="#accounts">
-                        {activeItem === 'accounts' ? <AccountIconActive className="sidebar-icon" />
-                            : <AccountIcon className="sidebar-icon" />}
-                        Accounts</a></li>
+                <li className={`sidebar-item ${activeItem === 'stock'? 'active':''}`}
+                    onClick={()=>handleItemClick('stock')}>
+                    <a href="#stock">
+                        {activeItem === 'stock' ? <StockIconActive className="sidebar-icon" />
+                            : <StockIcon className="sidebar-icon" />}
+                        Stock</a></li>
                 <li className={`sidebar-item ${activeItem === 'users'? 'active':''}`}
                     onClick={()=>handleItemClick('users')}>
                     <a href="#users">
