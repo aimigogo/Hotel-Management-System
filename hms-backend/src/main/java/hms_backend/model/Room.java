@@ -19,10 +19,8 @@ import java.io.Serial;
 @Table(name="rooms",indexes = {@Index(columnList = "id")})
 @SequenceGenerator(name = "idGenerator",sequenceName = "ROOM_SEQ",initialValue = 1,allocationSize = 1)
 public class Room{
-    @Serial
-    private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "idGenerator")
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "idGenerator")
     @Column(updatable = false)
     private Long id;
 
