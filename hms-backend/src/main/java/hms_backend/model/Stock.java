@@ -18,14 +18,12 @@ import java.io.Serial;
 @Table(name="stock",indexes = {@Index(columnList = "name")})
 @SequenceGenerator(name = "idGenerator",sequenceName = "STOCK_SEQ", initialValue = 1,allocationSize = 1)
 public class Stock{
-    @Serial
-    private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "idGenerator")
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "idGenerator")
     @Column(updatable = false)
     private Long id;
 
-    @Column
+    @Column(nullable = false)
     private String name;
 
     @NotNull
