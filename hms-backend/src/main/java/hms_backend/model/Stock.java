@@ -17,11 +17,7 @@ import java.io.Serial;
 @Entity
 @Table(name="stock",indexes = {@Index(columnList = "name")})
 @SequenceGenerator(name = "idGenerator",sequenceName = "STOCK_SEQ", initialValue = 1,allocationSize = 1)
-public class Stock{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "idGenerator")
-    @Column(updatable = false)
-    private Long id;
+public class Stock extends BaseModel{
 
     @Column(nullable = false)
     private String name;
