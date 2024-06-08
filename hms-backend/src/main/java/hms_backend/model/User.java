@@ -16,12 +16,7 @@ import lombok.Setter;
 @Entity
 @Table(name="users",indexes = {@Index(columnList = "email")})
 @SequenceGenerator(name = "idGenerator",sequenceName = "USER_SEQ", initialValue = 1,allocationSize = 1)
-public class User{
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "idGenerator")
-    @Column(updatable = false)
-    private Long id;
+public class User extends BaseModel{
 
     @Column
     private String firstName;
