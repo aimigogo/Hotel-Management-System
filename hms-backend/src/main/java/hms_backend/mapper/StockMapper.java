@@ -1,23 +1,11 @@
 package hms_backend.mapper;
 
-import hms_backend.dto.StockDto;
+
 import hms_backend.model.Stock;
+import hms_backend.transfer.resource.StockResource;
+import org.mapstruct.Mapper;
 
-public interface StockMapper {
+@Mapper(componentModel = "spring",config = IgnoreUnmappedMapperConfig.class)
+public interface StockMapper extends BaseMapper<Stock, StockResource>{
 
-    public static StockDto mapToStockDto(Stock stock){
-        return new StockDto(
-                stock.getId(),
-                stock.getName(),
-                stock.getQuantity()
-        );
-    }
-
-    public static Stock mapToStock(StockDto stockDto){
-        return new Stock(
-                stockDto.getId(),
-                stockDto.getName(),
-                stockDto.getQuantity()
-        );
-    }
 }
