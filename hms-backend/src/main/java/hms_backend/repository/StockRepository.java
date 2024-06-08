@@ -7,4 +7,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 @Transactional
 public interface StockRepository extends JpaRepository<Stock,Long> {
+    Stock getStockByName(final String name);
+
 }

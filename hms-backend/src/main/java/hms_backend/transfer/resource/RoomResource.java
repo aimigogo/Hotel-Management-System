@@ -1,24 +1,24 @@
-package hms_backend.dto;
+package hms_backend.transfer.resource;
 
 import hms_backend.model.enums.Amenities;
 import hms_backend.model.enums.Status;
 import hms_backend.model.enums.Type;
-import lombok.AllArgsConstructor;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
-public class RoomDto {
+@ToString(callSuper = true)
+public class RoomResource extends BaseResource{
 
-    private Long id;
-
+    @NotNull
     private Status status;
 
+    @NotNull
     private Amenities amenities;
 
+    @NotNull
     private Type type;
 }

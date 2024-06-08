@@ -1,7 +1,9 @@
 package hms_backend.service;
 
-import hms_backend.dto.UserDto;
 
-public interface UserService {
-    UserDto createUser(UserDto userDto);
+import hms_backend.model.User;
+
+public interface UserService extends BaseService<User,Long>{
+
+    User getUserByEmail(String email);
 }
