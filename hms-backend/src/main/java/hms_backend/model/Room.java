@@ -18,11 +18,7 @@ import java.io.Serial;
 @Entity
 @Table(name="rooms",indexes = {@Index(columnList = "id")})
 @SequenceGenerator(name = "idGenerator",sequenceName = "ROOM_SEQ",initialValue = 1,allocationSize = 1)
-public class Room{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "idGenerator")
-    @Column(updatable = false)
-    private Long id;
+public class Room extends BaseModel{
 
     @Enumerated(EnumType.STRING)
     @Column(length=10,nullable = false)
