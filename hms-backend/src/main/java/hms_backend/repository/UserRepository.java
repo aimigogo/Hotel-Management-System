@@ -1,14 +1,14 @@
 package hms_backend.repository;
 
-import hms_backend.model.User;
+import hms_backend.entity.User;
+import hms_backend.entity.enums.UserRole;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
 @Repository
-@Transactional
 public interface UserRepository extends JpaRepository<User,Long> {
+    Optional<User> findFirstByEmail(String email);
 
-
-
+    Optional<User> findByUserRole(UserRole userRole);
 }
