@@ -1,14 +1,27 @@
 import React, {useState} from "react";
-import './Login.css';
+import '../css/Login.css';
 import {ReactComponent as Logo} from "../assets/login-Logo.svg";
+import axios from "axios";
 
 export default function Login(){
-    const [username,setUsername]=useState('');
+    const [email,setEmail]=useState('');
     const [password,setPassword]=useState('');
+    const [message,setMessage]=useState('');
 
-    const handleLogin=(event)=>{
-        event.preventDeafult();
-        console.log('Login attempt:',{username,password});
+    const handleLogin = async (event) => {
+        event.preventDefault();
+        try {
+            const response = await axios.post('http://localhost:8080/api/auth/login', { email, password });
+            if (response.data.jwt) {
+                setMessage(`Welcome! Your role is ${response.data.userRole}.`);
+                // Store the JWT in localStorage or context if needed
+                localStorage.setItem('token', response.data.jwt);
+            } else {
+                setMessage('Wrong email or password');
+            }
+        } catch (error) {
+            setMessage('Wrong email or password');
+        }
     };
 
     return(
@@ -19,12 +32,12 @@ export default function Login(){
                 </div>
                 <form onSubmit={handleLogin}>
                     <div className="input-group">
-                        <label htmlFor="username">Username</label>
+                        <label htmlFor="email">Email</label>
                         <input
                             type="text"
-                            id="username"
-                            value={username}
-                            onChange={(e) => setUsername(e.target.value)}
+                            id="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
                             required
                         />
                     </div>
@@ -40,7 +53,6 @@ export default function Login(){
                     </div>
                     <button type="submit" className="login-button">Login</button>
                 </form>
-                <button className="forgot-password-button">Forgot Password</button>
             </div>
         </div>
 
