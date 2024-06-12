@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import './Sidebar.css';
+import '../css/Sidebar.css';
 import { ReactComponent as Logo } from '../assets/Logo.svg';
 import {ReactComponent as DashboardIcon } from '../assets/Inactive/dashboard.svg';
 import {ReactComponent as DashboardIconActive } from '../assets/Active/dashboard.svg';
