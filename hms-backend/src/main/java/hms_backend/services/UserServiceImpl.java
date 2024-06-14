@@ -2,6 +2,7 @@ package hms_backend.services;
 
 import hms_backend.dto.UserDto;
 import hms_backend.entity.User;
+import hms_backend.entity.enums.UserRole;
 import hms_backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -28,12 +29,18 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public List<UserDto> getAllEmployees() {
-        return null;
+        List<User> users = userRepository.findAll();
+        return users.stream()
+                .filter(user -> user.getUserRole() != UserRole.ADMIN)                .map(this::convertToDto)
+                .collect(Collectors.toList());
     }
 
-//    public List<UserDto> getAllEmployees(){
-//        List<User> users=userRepository.findAll();
-//        return users.stream().map((user -> UserMapper.mapToUserDto(user))
-//                .collect(Collectors.toList()));
-//    }
+    private UserDto convertToDto(User user) {
+        UserDto userDto = new UserDto();
+        userDto.setId(user.getId());
+        userDto.setName(user.getName());
+        userDto.setEmail(user.getEmail());
+        return userDto;
+    }
+
 }
