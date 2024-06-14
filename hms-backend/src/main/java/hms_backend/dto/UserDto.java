@@ -1,9 +1,12 @@
 package hms_backend.dto;
 
 import hms_backend.entity.enums.UserRole;
-import lombok.Data;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserDto {
     private Long id;
 
