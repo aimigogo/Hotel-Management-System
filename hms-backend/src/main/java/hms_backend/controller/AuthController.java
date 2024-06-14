@@ -19,6 +19,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @CrossOrigin("*")
@@ -69,4 +70,12 @@ public class AuthController {
         }
         return authenticationResponse;
     }
-}
+
+    @GetMapping("/employees")
+    public ResponseEntity<List<UserDto>> getAllEmployees(){
+        List<UserDto> employees=userService.getAllEmployees();
+        return ResponseEntity.ok(employees);
+    }
+
+    }
+
