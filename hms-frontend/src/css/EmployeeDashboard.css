@@ -1,0 +1,26 @@
+.employee-dashboard {
+    display: flex;
+    height: 100vh;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #2f4f4f;
+    color: white;
+    padding: 15px;
+}
+
+.dashboard-content {
+    flex: 1;
+    padding: 20px;
+    background-color: #1a1d20;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.table {
+    width: 100%;
+    margin-top: 20px;
+}
