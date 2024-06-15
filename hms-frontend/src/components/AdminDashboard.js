@@ -3,16 +3,18 @@ import Sidebar from "../components/Sidebar";
 import axios from "axios";
 import "../css/AdminDashboard.css"
 import {ReactComponent as AddUserIcon} from "../assets/person_add.svg";
-// import AddUserForm from "../components/AddUserForm";
-// import Modal from "./Modal";
-import {listEmployees} from '../Service/EmployeeService';
-import {Link} from "react-router-dom";
+import {listEmployees,updateEmployee,deleteEmployee} from '../Service/EmployeeService';
+import {useNavigate} from "react-router-dom";
+
 
 
 const AdminDashboard=()=>{
 
     const [employees,setEmployees] = useState([])
-    // const [showAddUserModal, setShowAddUserModal] = useState(false);
+    const [editingEmployeeId, setEditingEmployeeId] = useState(null);
+    const [editableEmployee, setEditableEmployee] = useState({});
+
+    const navigate=useNavigate();
 
     useEffect(() => {
         listEmployees().then((response)=>{
@@ -23,13 +25,44 @@ const AdminDashboard=()=>{
         })
     }, []);
 
-    // const handleUserAdded=(newEmployee)=>{
-    //     setEmployees([...employees,newEmployee]);
-    //     setShowAddUserModal(false);
-    // }
-    // const toggleAddUserModal = () => {
-    //     setShowAddUserModal(!showAddUserModal);
-    // };
+    const handleUserAdded=(newEmployee)=>{
+        setEmployees([...employees,newEmployee]);
+
+    }
+    const handleEditClick = (employee) => {
+        setEditingEmployeeId(employee.id);
+        setEditableEmployee(employee);
+    };
+
+    const handleSaveClick = async () => {
+        try {
+            await updateEmployee(editingEmployeeId, editableEmployee);
+            setEmployees(employees.map(emp => emp.id === editingEmployeeId ? editableEmployee : emp));
+            setEditingEmployeeId(null);
+        } catch (error) {
+            console.error('Error updating employee:', error);
+        }
+    };
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setEditableEmployee({
+            ...editableEmployee,
+            [name]: value
+        });
+    };
+    const handleDeleteButton=async(employeeId)=>{
+        try {
+            await deleteEmployee(employeeId);
+            setEmployees(employees.filter(emp => emp.id !== employeeId));
+        } catch (error) {
+            console.error('Error deleting employee:', error);
+        }
+    }
+
+    const navigateToAddUserForm = () => {
+        navigate('/AddUserForm',{state:{onUserAdded:handleUserAdded}});
+    };
 
     return(
         <div className='admin-dashboard'>
@@ -44,27 +77,52 @@ const AdminDashboard=()=>{
                     <th>Employee Name</th>
                     <th>Employee Email</th>
                     <th>
-                        <Link to="/AddUserForm" className="add-user-button">
+                        <button className="add-user-button" onClick={navigateToAddUserForm}>
                             <AddUserIcon /> Add User
-                        </Link>
+                        </button>
                     </th>
                 </tr>
                 </thead>
                 <tbody>
-                {
-                    employees.map(employee=>
-                        <tr key={employee.id}>
-                            <td>{employee.id}</td>
-                            <td>{employee.name}</td>
-                            <td>{employee.email}</td>
-                            <td>
-                                <div className="action-buttons">
-                                    <button className="edit-button">Edit</button>
-                                    <button className="delete-button">Delete</button>
-                                </div>
-                            </td>
-                        </tr>)
-                }
+                {employees.map(employee => (
+                    <tr key={employee.id}>
+                        <td>{employee.id}</td>
+                        <td>
+                            {editingEmployeeId === employee.id ? (
+                                <input
+                                    type="text"
+                                    name="name"
+                                    value={editableEmployee.name}
+                                    onChange={handleChange}
+                                />
+                            ) : (
+                                employee.name
+                            )}
+                        </td>
+                        <td>
+                            {editingEmployeeId === employee.id ? (
+                                <input
+                                    type="email"
+                                    name="email"
+                                    value={editableEmployee.email}
+                                    onChange={handleChange}
+                                />
+                            ) : (
+                                employee.email
+                            )}
+                        </td>
+                        <td>
+                            <div className="action-buttons">
+                                {editingEmployeeId === employee.id ? (
+                                    <button className="save-button" onClick={handleSaveClick}>Save</button>
+                                ) : (
+                                    <button className="edit-button" onClick={() => handleEditClick(employee)}>Edit</button>
+                                )}
+                                <button className="delete-button" onClick={() => handleDeleteButton(employee.id)}>Delete</button>
+                            </div>
+                        </td>
+                    </tr>
+                ))}
                 </tbody>
             </table>
             </div>
