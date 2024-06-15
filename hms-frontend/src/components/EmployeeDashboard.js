@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import Sidebar from "./Sidebar";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
+import {ReactComponent as CalendarIcon} from "../assets/calendar_month.svg";
 
 import{listEmployees} from "../Service/EmployeeService";
 import "../css/EmployeeDashboard.css"
@@ -22,7 +23,7 @@ const EmployeeDashboard=()=>{
         <div className="employee-dashboard">
             <Sidebar/>
             <div className="dashboard-content">
-                <h2 className='text-center text-white'>Weekly Schedule</h2>
+                <h2 className='text-center text-white'><CalendarIcon/>Weekly Schedule</h2>
                 <table className='table table-striped table-bordered'>
                     <thead>
                     <tr>
