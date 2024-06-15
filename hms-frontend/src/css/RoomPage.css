@@ -18,3 +18,42 @@
     text-align: center;
     color:white;
 }
+.table {
+    width: 100%;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.add-room-button, .edit-button, .delete-button, .save-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: inherit;
+    font-size: 1em;
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+}
+.edit-button {
+    color: #007bff;
+}
+
+.delete-button {
+    color: #dc3545;
+}
+
+.save-button{
+    color: #198754;
+}
+
+.add-room-button:hover, .edit-button:hover, .delete-button:hover , .save-button:hover{
+    text-decoration: underline;
+}
+
+.add-room-button:focus, .edit-button:focus, .delete-button:focus, .save-button:focus{
+    outline: none;
+}
+.action-buttons {
+    display: flex;
+    gap: 0.5em;
+}
