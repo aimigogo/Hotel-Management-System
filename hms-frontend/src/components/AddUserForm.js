@@ -19,7 +19,9 @@ const AddUserForm = () => {
                 name, email, password
             });
             if (response.data) {
-                onUserAdded(response.data);
+                if (onUserAdded){
+                    onUserAdded(response.data);
+                }
                 setName('');
                 setEmail('');
                 setPassword('');

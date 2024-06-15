@@ -32,31 +32,7 @@
     box-sizing: border-box;
 }
 
-/*.add-user-form button {*/
-/*    width: 100%;*/
-/*    padding: 10px;*/
-/*    background-color: #00796b;*/
-/*    color: white;*/
-/*    border: none;*/
-/*    border-radius: 5px;*/
-/*    cursor: pointer;*/
-/*}*/
-/*.cancel-button {*/
-/*    width: 100%;*/
-/*    padding: 10px;*/
-/*    background-color: #00796b;*/
-/*    color: white;*/
-/*    border: none;*/
-/*    border-radius: 5px;*/
-/*    cursor: pointer;*/
-/*}*/
 
-/*.add-user-form button:hover {*/
-/*    background-color: #004c40;*/
-/*}*/
-/*.cancel-button:hover {*/
-/*    background-color: #004c40;*/
-/*}*/
 .form-buttons {
     display: flex;
     justify-content: space-evenly;
