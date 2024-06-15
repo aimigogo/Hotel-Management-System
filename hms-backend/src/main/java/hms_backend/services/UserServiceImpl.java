@@ -4,6 +4,7 @@ import hms_backend.dto.UserDto;
 import hms_backend.entity.User;
 import hms_backend.entity.enums.UserRole;
 import hms_backend.repository.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -31,7 +32,8 @@ public class UserServiceImpl implements UserService{
     public List<UserDto> getAllEmployees() {
         List<User> users = userRepository.findAll();
         return users.stream()
-                .filter(user -> user.getUserRole() != UserRole.ADMIN)                .map(this::convertToDto)
+                .filter(user -> user.getUserRole() != UserRole.ADMIN)
+                .map(this::convertToDto)
                 .collect(Collectors.toList());
     }
 
@@ -41,6 +43,20 @@ public class UserServiceImpl implements UserService{
         userDto.setName(user.getName());
         userDto.setEmail(user.getEmail());
         return userDto;
+    }
+
+    public UserDto updateUser(Long id,UserDto userDto){
+        User user=userRepository.findById(id)
+                .orElseThrow(()->new EntityNotFoundException("User not found"));
+        user.setName(userDto.getName());
+        user.setEmail(userDto.getEmail());
+        userRepository.save(user);
+        return new UserDto();
+
+    }
+
+    public void deleteUser(Long id){
+        userRepository.deleteById(id);
     }
 
 }
