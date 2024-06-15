@@ -23,7 +23,7 @@
     text-align: center;
 }
 
-.add-user-button, .edit-button, .delete-button {
+.add-user-button, .edit-button, .delete-button, .save-button {
     background: none;
     border: none;
     cursor: pointer;
@@ -41,11 +41,15 @@
     color: #dc3545;
 }
 
-.add-user-button:hover, .edit-button:hover, .delete-button:hover {
+.save-button{
+    color: #198754;
+}
+
+.add-user-button:hover, .edit-button:hover, .delete-button:hover , .save-button:hover{
     text-decoration: underline;
 }
 
-.add-user-button:focus, .edit-button:focus, .delete-button:focus {
+.add-user-button:focus, .edit-button:focus, .delete-button:focus, .save-button:focus{
     outline: none;
 }
 .action-buttons {
