@@ -10,6 +10,8 @@ import StockPage from "./components/StockPage";
 import SettingsPage from "./components/SettingsPage";
 import {UserProvider} from "./context/UserRoleContext";
 import AddUserForm from "./components/AddUserForm";
+import AddRoomForm from "./components/AddRoomForm";
+import AddStockItemForm from "./components/AddStockItemForm";
 
 
 function App() {
@@ -25,6 +27,8 @@ function App() {
                 <Route path="/StockPage" element={<StockPage/>}/>
                 <Route path="/SettingsPage" element={<SettingsPage/>}/>
                 <Route path="/AddUserForm" element={<AddUserForm/>}/>
+                <Route path="/AddRoomForm" element={<AddRoomForm/>}/>
+                <Route path="/AddStockItemForm" element={<AddStockItemForm/>}/>
             </Routes>
         </Router>
         </UserProvider>
