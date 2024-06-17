@@ -2,29 +2,30 @@ import React, { useState } from "react";
 import axios from "axios";
 import "../css/AddRoomForm.css";
 import { useNavigate, useLocation } from "react-router-dom";
+import {useRoomContext} from "../context/RoomContext";
 
 const AddRoomForm = () => {
     const [name, setName] = useState('');
     const [type, setType] = useState('');
     const [price, setPrice] = useState('');
+    const [availability,setAvailability]=useState('');
     const [message,setMessage]=useState('');
     const navigate = useNavigate();
     const location = useLocation();
-    const {onRoomAdded} = location.state?.onRoomAdded;
+    const {handleRoomAdded} = useRoomContext();
 
     const handleAddRoom = async (event) => {
         event.preventDefault();
         try {
             const response = await axios.post('http://localhost:8080/api/auth/createRoom', {
-                name, type, price
+                name, type, price,availability
             });
             if (response.data) {
-                if (onRoomAdded){
-                    onRoomAdded(response.data);
-                }
+                handleRoomAdded(response.data)
                 setName('');
                 setType('');
                 setPrice('');
+                setAvailability('');
                 setMessage('Room added successfully!');
                 setTimeout(() => {
                     setMessage('');
@@ -44,7 +45,7 @@ const AddRoomForm = () => {
     return (
         <div className="add-room-form-content">
             <div className="add-room-form">
-                <h2>Add New User</h2>
+                <h2>Add New Room</h2>
                 {message && <p>{message}</p>}
                 <form onSubmit={handleAddRoom}>
                     <input
@@ -66,6 +67,13 @@ const AddRoomForm = () => {
                         placeholder="Price"
                         value={price}
                         onChange={(e) => setPrice(e.target.value)}
+                        required
+                    />
+                    <input
+                        type="availability"
+                        placeholder="availability"
+                        value={availability}
+                        onChange={(e) => setAvailability(e.target.value)}
                         required
                     />
                     <div className="form-buttons">
