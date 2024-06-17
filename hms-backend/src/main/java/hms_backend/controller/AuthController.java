@@ -2,11 +2,11 @@ package hms_backend.controller;
 
 import hms_backend.dto.*;
 import hms_backend.entity.User;
+import hms_backend.entity.enums.Section;
+import hms_backend.entity.enums.Shift;
 import hms_backend.repository.UserRepository;
 import hms_backend.services.AuthService;
-import hms_backend.services.StockService;
 import hms_backend.services.UserService;
-import hms_backend.services.admin.RoomService;
 import hms_backend.util.JwtUtil;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
@@ -16,8 +16,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+
 
 import java.util.List;
 import java.util.Optional;
@@ -37,44 +39,7 @@ public class AuthController {
 
     private final UserService userService;
 
-    private final RoomService roomService;
-
-    private final StockService stockService;
-
-    @PostMapping("/signup")
-    public ResponseEntity<?> signupUser(@RequestBody SignupRequest signupRequest){
-        try{
-            UserDto createdUser=authService.createUser(signupRequest);
-            return new ResponseEntity<>(createdUser, HttpStatus.OK);
-        }catch (EntityExistsException entityExistsException){
-            return new ResponseEntity<>("User already exists",HttpStatus.NOT_ACCEPTABLE);
-        }catch (Exception e){
-            return new ResponseEntity<>("User not created,please try again",HttpStatus.BAD_REQUEST);
-        }
-    }
-    @PostMapping("/createRoom")
-    public ResponseEntity<?> createRoom(@RequestBody RoomDto roomDto){
-        try{
-            RoomDto createdRoom=authService.createRoom(roomDto);
-            return new ResponseEntity<>(createdRoom, HttpStatus.OK);
-        }catch (EntityExistsException entityExistsException){
-            return new ResponseEntity<>("Room already exists",HttpStatus.NOT_ACCEPTABLE);
-        }catch (Exception e){
-            return new ResponseEntity<>("Room not created,please try again",HttpStatus.BAD_REQUEST);
-        }
-    }
-    @PostMapping("/createStockItem")
-    public ResponseEntity<?> createdStockItem(@RequestBody StockDto stockDto){
-        try{
-            StockDto createdStock=authService.createStockItem(stockDto);
-            return new ResponseEntity<>(createdStock, HttpStatus.OK);
-        }catch (EntityExistsException entityExistsException){
-            return new ResponseEntity<>("Stock item already exists",HttpStatus.NOT_ACCEPTABLE);
-        }catch (Exception e){
-            return new ResponseEntity<>("Stock item not created,please try again",HttpStatus.BAD_REQUEST);
-        }
-    }
-
+    //Login user
     @PostMapping("/login")
     public AuthenticationResponse createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest){
         try{
@@ -97,23 +62,19 @@ public class AuthController {
         return authenticationResponse;
     }
 
-    @GetMapping("/employees")
-    public ResponseEntity<List<UserDto>> getAllEmployees(){
-        List<UserDto> employees=userService.getAllEmployees();
-        return ResponseEntity.ok(employees);
+    //Create User
+    @PostMapping("/signup")
+    public ResponseEntity<?> signupUser(@RequestBody SignupRequest signupRequest){
+        try{
+            UserDto createdUser=authService.createUser(signupRequest);
+            return new ResponseEntity<>(createdUser, HttpStatus.OK);
+        }catch (EntityExistsException entityExistsException){
+            return new ResponseEntity<>("User already exists",HttpStatus.NOT_ACCEPTABLE);
+        }catch (Exception e){
+            return new ResponseEntity<>("User not created,please try again",HttpStatus.BAD_REQUEST);
+        }
     }
-    @GetMapping("/rooms")
-    public ResponseEntity<List<Object>> getAllRooms(){
-        List<Object> rooms=roomService.getAllRooms();
-        return ResponseEntity.ok(rooms);
-    }
-
-    @GetMapping("/stocks")
-    public ResponseEntity<List<Object>> getAllStockItems(){
-        List<Object> stockItems=stockService.getAllStockItems();
-        return ResponseEntity.ok(stockItems);
-    }
-
+    //Update User/Employee
     @PutMapping("/employees/update/{id}")
     public ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody UserDto userDto) {
         try {
@@ -126,11 +87,23 @@ public class AuthController {
         }
     }
 
+
+
+    //Delete User/Employee
     @DeleteMapping("/employees/delete/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id){
         userService.deleteUser(id);
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/employees")
+    public ResponseEntity<List<UserDto>> getAllEmployees(){
+        List<UserDto> employees=userService.getAllEmployees();
+        return ResponseEntity.ok(employees);
     }
+
+
+
+}
+
 
