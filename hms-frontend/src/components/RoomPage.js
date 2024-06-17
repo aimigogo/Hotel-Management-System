@@ -4,12 +4,14 @@ import "../css/RoomPage.css"
 import {listRooms,updateRoom,deleteRoom} from "../Service/RoomService";
 import {useNavigate} from "react-router-dom";
 import {ReactComponent as AddRoomIcon} from "../assets/add room.svg";
+import {getAvailability} from "../Service/EnumService";
 
 
 const RoomPage = () => {
     const [room,setRoom]=useState([]);
     const [editingRoomId, setEditingRoomId] = useState(null);
     const [editableRoom, setEditableRoom] = useState({});
+    const [availability,setAvailability]=useState([]);
 
     const navigate=useNavigate();
 
@@ -19,6 +21,12 @@ const RoomPage = () => {
         }).catch(error=>{
             console.error(error);
             console.error('Error fetching room:', error);
+        })
+
+        getAvailability().then(data=>{
+            setAvailability(data);
+        }).catch(error =>{
+            console.error('Error fetching availability:',error);
         })
     }, []);
 
@@ -59,7 +67,7 @@ const RoomPage = () => {
     }
 
     const navigateToAddRoomForm = () => {
-        navigate('/AddRoomForm',{state:{onRoomAdded:handleRoomAdded}});
+        navigate('/AddRoomForm');
     };
 
     return (
@@ -74,6 +82,7 @@ const RoomPage = () => {
                         <th>Room Name</th>
                         <th>Type</th>
                         <th>Price</th>
+                        <th>Available</th>
                         <th>
                             <button className="add-room-button" onClick={navigateToAddRoomForm}>
                                 <AddRoomIcon/> Add Room
@@ -119,6 +128,26 @@ const RoomPage = () => {
                                     />
                                 ) : (
                                     room.price
+                                )}
+                            </td>
+                            <td>
+                                {editingRoomId===room.id?(
+                                    <select
+                                        name="available"
+                                        value={editableRoom.availability}
+                                        onChange={handleChange}
+                                        >
+                                        <option value="">Select Availability</option>
+                                        {
+                                            availability.map(availability=>(
+                                                <option key={availability.id} value={availability.name}>
+                                                    {availability.name}
+                                                </option>
+                                            ))
+                                        }
+                                    </select>
+                                ):(
+                                    room.availability
                                 )}
                             </td>
                             <td>
