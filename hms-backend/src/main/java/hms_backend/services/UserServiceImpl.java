@@ -42,6 +42,8 @@ public class UserServiceImpl implements UserService{
         userDto.setId(user.getId());
         userDto.setName(user.getName());
         userDto.setEmail(user.getEmail());
+        userDto.setSection(user.getSection());
+        userDto.setShift(user.getShift());
         return userDto;
     }
 
@@ -50,6 +52,8 @@ public class UserServiceImpl implements UserService{
                 .orElseThrow(()->new EntityNotFoundException("User not found"));
         user.setName(userDto.getName());
         user.setEmail(userDto.getEmail());
+        user.setSection(userDto.getSection());
+        user.setShift(userDto.getShift());
         userRepository.save(user);
         return new UserDto();
 
@@ -58,5 +62,8 @@ public class UserServiceImpl implements UserService{
     public void deleteUser(Long id){
         userRepository.deleteById(id);
     }
+
+
+
 
 }
