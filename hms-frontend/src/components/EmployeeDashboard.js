@@ -1,7 +1,5 @@
 import React, {useEffect, useState} from "react";
 import Sidebar from "./Sidebar";
-import axios from "axios";
-import {useNavigate} from "react-router-dom";
 import {ReactComponent as CalendarIcon} from "../assets/calendar_month.svg";
 
 import{listEmployees} from "../Service/EmployeeService";
@@ -42,13 +40,13 @@ const EmployeeDashboard=()=>{
                         employees.map(employees=>
                         <tr key={employees.id}>
                             <td>{employees.name}</td>
-                            <td>{employees.section}{employees.shift}</td>
-                            <td>{employees.section}{employees.shift}</td>
-                            <td>{employees.section}{employees.shift}</td>
-                            <td>{employees.section}{employees.shift}</td>
-                            <td>{employees.section}{employees.shift}</td>
-                            <td>{employees.section}{employees.shift}</td>
-                            <td>{employees.section}{employees.shift}</td>
+                            <td>{employees.section}<br />{employees.shift}</td>
+                            <td>{employees.section}<br />{employees.shift}</td>
+                            <td>{employees.section}<br />{employees.shift}</td>
+                            <td>{employees.section}<br />{employees.shift}</td>
+                            <td>{employees.section}<br />{employees.shift}</td>
+                            <td>{employees.section}<br />{employees.shift}</td>
+                            <td>{employees.section}<br />{employees.shift}</td>
                         </tr>
                         )
                     }
