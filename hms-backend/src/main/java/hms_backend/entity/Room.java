@@ -1,11 +1,9 @@
 package hms_backend.entity;
 
 import hms_backend.dto.RoomDto;
-import hms_backend.dto.UserDto;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import hms_backend.entity.enums.Available;
+import hms_backend.entity.enums.Type;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,11 +23,14 @@ public class Room {
 
     private String name;
 
-    private String type;
+    @Enumerated(EnumType.STRING)
+    private Type type;
 
     private BigDecimal price;
 
-    private boolean available;
+
+    @Enumerated(EnumType.STRING)
+    private Available available;
 
     public RoomDto getRoomDto(){
         RoomDto dto=new RoomDto();
@@ -37,6 +38,7 @@ public class Room {
         dto.setName(name);
         dto.setType(type);
         dto.setPrice(price);
+        dto.setAvailable(available);
         return dto;
     }
 }
