@@ -60,7 +60,7 @@ const StockPage = () => {
     }
 
     const navigateToAddStockItemForm = () => {
-        navigate('/AddStockItemForm',{state:{onStockItemAdded:handleStockItemAdded}});
+        navigate('/AddStockItemForm');
     };
 
     return (
@@ -76,7 +76,7 @@ const StockPage = () => {
                         <th>Quantity</th>
                         <th>
                             <button className="add-stock-item-button" onClick={navigateToAddStockItemForm}>
-                               <AddStockIcon/> Add Stock Item
+                               <AddStockIcon/> Add Item
                             </button>
                         </th>
                     </tr>
