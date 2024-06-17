@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import "../css/AddStockItemForm.css";
 import { useNavigate, useLocation } from "react-router-dom";
+import {useStockItemContext} from "../context/StockItemContext";
 
 const AddStockItemForm = () => {
     const [name, setName] = useState('');
@@ -9,7 +10,7 @@ const AddStockItemForm = () => {
     const [message,setMessage]=useState('');
     const navigate = useNavigate();
     const location = useLocation();
-    const onStockItemAdded = location.state?.onStockItemAdded;
+    const {handleStockItemAdded} = useStockItemContext();
 
     const handleAddStockItem = async (event) => {
         event.preventDefault();
@@ -18,9 +19,7 @@ const AddStockItemForm = () => {
                 name, quantity
             });
             if (response.data) {
-                if (onStockItemAdded){
-                    onStockItemAdded(response.data);
-                }
+                handleStockItemAdded(response.data);
                 setName('');
                 setQuantity('');
                 setMessage('Stock Item added successfully!');
