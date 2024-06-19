@@ -38,11 +38,6 @@ const AdminDashboard=()=>{
             console.error('Error fetching shifts:', error);
         });
     }, []);
-
-    const handleUserAdded=(newEmployee)=>{
-        setEmployees([...employees,newEmployee]);
-
-    }
     const handleEditClick = (employee) => {
         setEditingEmployeeId(employee.id);
         setEditableEmployee(employee);
@@ -130,24 +125,36 @@ const AdminDashboard=()=>{
                             </td>
                             <td>
                                 {editingEmployeeId === employee.id ? (
-                                    <input
-                                        type="section"
+                                    <select
                                         name="section"
-                                        value={editableEmployee.section}
+                                        value={editableEmployee.section || ''}
                                         onChange={handleChange}
-                                    />
+                                    >
+                                        <option value="">Select Section</option>
+                                        {sections.map(sec=>(
+                                            <option key={sec} value={sec}>
+                                                {sec}
+                                            </option>
+                                        ))}
+                                    </select>
                                 ) : (
                                     employee.section
                                 )}
                             </td>
                             <td>
                                 {editingEmployeeId === employee.id ? (
-                                    <input
-                                        type="shift"
+                                    <select
                                         name="shift"
                                         value={editableEmployee.shift}
                                         onChange={handleChange}
-                                    />
+                                    >
+                                        <option value="">Select Shift</option>
+                                        {shifts.map(shift=>(
+                                            <option key={shift} value={shift}>
+                                                {shift}
+                                            </option>
+                                        ))}
+                                    </select>
                                 ) : (
                                     employee.shift
                                 )}
