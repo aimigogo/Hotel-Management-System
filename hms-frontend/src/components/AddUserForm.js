@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 import "../css/AddUserForm.css";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {useUser} from "../context/UserContext";
+import { getSections, getShifts} from "../Service/EnumService";
 
 const AddUserForm = () => {
     const [name, setName] = useState('');
@@ -10,9 +11,16 @@ const AddUserForm = () => {
     const [password, setPassword] = useState('');
     const [section, setSection] = useState('');
     const [shift, setShift] = useState('');
+    const [sections, setSections] = useState([]);
+    const [shifts, setShifts] = useState([]);
     const [message, setMessage] = useState('');
     const navigate = useNavigate();
     const { handleUserAdded } = useUser();
+
+    useEffect(() => {
+        getSections().then(setSections).catch(error => console.error('Error fetching sections:', error));
+        getShifts().then(setShifts).catch(error => console.error('Error fetching Shifts:', error));
+    }, []);
 
     const handleAddUser = async (event) => {
         event.preventDefault();
@@ -70,20 +78,26 @@ const AddUserForm = () => {
                         onChange={(e) => setPassword(e.target.value)}
                         required
                     />
-                    <input
-                        type="section"
-                        placeholder="Section"
+                    <select
                         value={section}
                         onChange={(e) => setSection(e.target.value)}
                         required
-                    />
-                    <input
-                        type="shift"
-                        placeholder="Shift"
+                    >
+                        <option value="" disabled>Select Section</option>
+                        {sections.map(sec=>(
+                            <option key={sec} value={sec}>{sec}</option>
+                        ))}
+                    </select>
+                    <select
                         value={shift}
                         onChange={(e) => setShift(e.target.value)}
                         required
-                    />
+                    >
+                        <option value="" disabled>Select Shift</option>
+                        {shifts.map(shift=>(
+                            <option key={shift} value={shift}>{shift}</option>
+                        ))}
+                    </select>
                     <div className="form-buttons">
                         <button type="submit">Add User</button>
                         <button type="button" onClick={handleCancel}>Cancel</button>
