@@ -21,7 +21,9 @@ export default function Sidebar() {
 
     useEffect(() => {
         const path = location.pathname;
-        if (path.includes('AdminDashboard') || path.includes('EmployeeDashboard')) {
+        if (path.includes('AdminDashboard')) {
+            setActiveItem('dashboard');
+        } else if (path.includes('EmployeeDashboard')) {
             setActiveItem('dashboard');
         } else if (path.includes('RoomPage')) {
             setActiveItem('rooms');
@@ -30,7 +32,7 @@ export default function Sidebar() {
         } else if (path.includes('Login')) {
             setActiveItem('exit');
         }
-    }, [location.pathname]);
+    }, [location.pathname, userType]);
 
     const handleItemClick=(item)=>{
         setActiveItem(item);
