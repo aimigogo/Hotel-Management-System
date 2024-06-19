@@ -1,31 +1,40 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../css/AddRoomForm.css";
-import { useNavigate, useLocation } from "react-router-dom";
-import {useRoomContext} from "../context/RoomContext";
+import { useNavigate } from "react-router-dom";
+import { useRoomContext } from "../context/RoomContext";
+import { getAvailability, getType } from "../Service/EnumService";
 
 const AddRoomForm = () => {
     const [name, setName] = useState('');
     const [type, setType] = useState('');
     const [price, setPrice] = useState('');
-    const [availability,setAvailability]=useState('');
-    const [message,setMessage]=useState('');
+    const [available, setAvailable] = useState('');
+    const [message, setMessage] = useState('');
+    const [types, setTypes] = useState([]);
+    const [availabilities, setAvailabilities] = useState([]);
     const navigate = useNavigate();
-    const location = useLocation();
-    const {handleRoomAdded} = useRoomContext();
+    const { handleRoomAdded } = useRoomContext();
+
+    useEffect(() => {
+        getType().then(setTypes).catch(error => console.error('Error fetching types:', error));
+        getAvailability().then(setAvailabilities).catch(error => console.error('Error fetching availabilities:', error));
+    }, []);
 
     const handleAddRoom = async (event) => {
         event.preventDefault();
         try {
-            const response = await axios.post('http://localhost:8080/api/auth/createRoom', {
-                name, type, price,availability
-            });
+            const response = await axios.post(
+                'http://localhost:8080/api/room/createRoom',{
+                    name,type,price, available
+                }
+            );
             if (response.data) {
-                handleRoomAdded(response.data)
+                handleRoomAdded(response.data);
                 setName('');
                 setType('');
                 setPrice('');
-                setAvailability('');
+                setAvailable('');
                 setMessage('Room added successfully!');
                 setTimeout(() => {
                     setMessage('');
@@ -55,27 +64,33 @@ const AddRoomForm = () => {
                         onChange={(e) => setName(e.target.value)}
                         required
                     />
-                    <input
-                        type="type"
-                        placeholder="Type"
+                    <select
                         value={type}
                         onChange={(e) => setType(e.target.value)}
                         required
-                    />
+                    >
+                        <option value="" disabled>Select Type</option>
+                        {types.map(t => (
+                            <option key={t} value={t}>{t}</option>
+                        ))}
+                    </select>
                     <input
-                        type="price"
+                        type="number"
                         placeholder="Price"
                         value={price}
                         onChange={(e) => setPrice(e.target.value)}
                         required
                     />
-                    <input
-                        type="availability"
-                        placeholder="availability"
-                        value={availability}
-                        onChange={(e) => setAvailability(e.target.value)}
+                    <select
+                        value={available}
+                        onChange={(e) => setAvailable(e.target.value)}
                         required
-                    />
+                    >
+                        <option value="" disabled>Select Availability</option>
+                        {availabilities.map(a => (
+                            <option key={a} value={a}>{a}</option>
+                        ))}
+                    </select>
                     <div className="form-buttons">
                         <button type="submit">Add Room</button>
                         <button type="button" onClick={handleCancel}>Cancel</button>
