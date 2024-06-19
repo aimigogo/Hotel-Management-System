@@ -4,36 +4,43 @@ import "../css/RoomPage.css"
 import {listRooms,updateRoom,deleteRoom} from "../Service/RoomService";
 import {useNavigate} from "react-router-dom";
 import {ReactComponent as AddRoomIcon} from "../assets/add room.svg";
-import {getAvailability} from "../Service/EnumService";
+import {getAvailability, getType} from "../Service/EnumService";
 
 
 const RoomPage = () => {
     const [room,setRoom]=useState([]);
     const [editingRoomId, setEditingRoomId] = useState(null);
     const [editableRoom, setEditableRoom] = useState({});
-    const [availability,setAvailability]=useState([]);
+    const [available,setAvailable]=useState([]);
+    const [types,setTypes]=useState([]);
 
     const navigate=useNavigate();
 
     useEffect(() => {
-        listRooms().then((response)=>{
-            setRoom(response.data);
-        }).catch(error=>{
-            console.error(error);
-            console.error('Error fetching room:', error);
-        })
+        listRooms()
+            .then((response) => {
+                setRoom(response.data);
+            })
+            .catch(error => {
+                console.error('Error fetching rooms:', error);
+            });
 
-        getAvailability().then(data=>{
-            setAvailability(data);
-        }).catch(error =>{
-            console.error('Error fetching availability:',error);
-        })
+        getAvailability().then(data => {
+                setAvailable(data);
+            }).catch(error => {
+                console.error('Error fetching availability:', error);
+            });
+
+        getType()
+            .then(data => {
+                setTypes(data);
+            })
+            .catch(error => {
+                console.error('Error fetching types:', error);
+            });
     }, []);
 
-    const handleRoomAdded=(newRoom)=>{
-        setRoom([...room,newRoom]);
 
-    }
 
     const handleEditClick = (room) => {
         setEditingRoomId(room.id);
@@ -50,12 +57,13 @@ const RoomPage = () => {
         }
     };
 
+
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setEditableRoom({
-            ...editableRoom,
+        setEditableRoom(prevEditableRoom => ({
+            ...prevEditableRoom,
             [name]: value
-        });
+        }));
     };
     const handleDeleteButton=async(roomId)=>{
         try {
@@ -99,7 +107,7 @@ const RoomPage = () => {
                                     <input
                                         type="text"
                                         name="name"
-                                        value={editableRoom.name}
+                                        value={editableRoom.name || ''}
                                         onChange={handleChange}
                                     />
                                 ) : (
@@ -108,12 +116,18 @@ const RoomPage = () => {
                             </td>
                             <td>
                                 {editingRoomId === room.id ? (
-                                    <input
-                                        type="type"
+                                    <select
                                         name="type"
-                                        value={editableRoom.type}
+                                        value={editableRoom.type || ''}
                                         onChange={handleChange}
-                                    />
+                                    >
+                                        <option value="">Select Type</option>
+                                        {types.map(type => (
+                                            <option key={type} value={type}>
+                                                {type}
+                                            </option>
+                                        ))}
+                                    </select>
                                 ) : (
                                     room.type
                                 )}
@@ -121,9 +135,9 @@ const RoomPage = () => {
                             <td>
                                 {editingRoomId === room.id ? (
                                     <input
-                                        type="price"
+                                        type="number"
                                         name="price"
-                                        value={editableRoom.price}
+                                        value={editableRoom.price || ''}
                                         onChange={handleChange}
                                     />
                                 ) : (
@@ -131,23 +145,22 @@ const RoomPage = () => {
                                 )}
                             </td>
                             <td>
-                                {editingRoomId===room.id?(
+                                {editingRoomId === room.id ? (
                                     <select
                                         name="available"
-                                        value={editableRoom.availability}
+                                        value={editableRoom.available || ''}
                                         onChange={handleChange}
-                                        >
+                                    >
                                         <option value="">Select Availability</option>
-                                        {
-                                            availability.map(availability=>(
-                                                <option key={availability.id} value={availability.name}>
-                                                    {availability.name}
-                                                </option>
-                                            ))
-                                        }
+                                        {available.map(avail => (
+                                            <option key={avail} value={avail}>
+                                                {avail}
+                                            </option>
+                                        ))}
                                     </select>
-                                ):(
-                                    room.availability
+
+                                ) : (
+                                    room.available
                                 )}
                             </td>
                             <td>
@@ -157,7 +170,7 @@ const RoomPage = () => {
                                     ) : (
                                         <button className="edit-button" onClick={() => handleEditClick(room)}>Edit</button>
                                     )}
-                                    <button className="delete-button"onClick={() => handleDeleteButton(room.id)}>Delete</button>
+                                    <button className="delete-button" onClick={() => handleDeleteButton(room.id)}>Delete</button>
                                 </div>
                             </td>
                         </tr>
