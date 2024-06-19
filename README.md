@@ -12,6 +12,9 @@ The **Hotel Management System** is a full-stack web application designed to stre
 2. **Room Management:**
     - Both employers and employees can add,edit and delete rooms.
     - Track room availability.
+  
+3. **Stock Management**
+    - Both employers and employees can add,edit and delete stock items.
 
 ## Tech Stack
 
