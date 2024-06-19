@@ -22,9 +22,8 @@
 }
 
 .add-room-form input[type="text"],
-.add-room-form input[type="type"],
-.add-room-form input[type="price"],
-.add-room-form input[type="availability"] {
+.add-room-form input[type="number"],
+.add-room-form select {
     width: 100%;
     padding: 10px;
     margin-bottom: 15px;
