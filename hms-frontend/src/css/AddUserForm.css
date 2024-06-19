@@ -25,8 +25,7 @@
 .add-user-form input[type="email"],
 .add-user-form input[type="password"],
 .add-user-form input[type="role"],
-.add-user-form input[type="section"],
-.add-user-form input[type="shift"]{
+.add-user-form select{
     width: 100%;
     padding: 10px;
     margin-bottom: 15px;
