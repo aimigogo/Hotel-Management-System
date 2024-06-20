@@ -1,9 +1,9 @@
 package hms_backend.services;
 
 import hms_backend.dto.StockDto;
-import hms_backend.dto.UserDto;
+
 import hms_backend.entity.Stock;
-import hms_backend.entity.User;
+
 import hms_backend.repository.StockRepository;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;

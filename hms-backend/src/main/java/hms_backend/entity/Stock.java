@@ -24,19 +24,19 @@ public class Stock {
 
     private Integer quantity;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
-
-    @ManyToMany(mappedBy = "stocks")
-    private List<Room> rooms;
+//    @ManyToOne
+//    @JoinColumn(name = "user_id", nullable = false)
+//    private User user;
+//
+//    @ManyToMany(mappedBy = "stocks")
+//    private List<Room> rooms;
 
     public StockDto getStockDto(){
         StockDto dto=new StockDto();
         dto.setId(id);
         dto.setName(name);
         dto.setQuantity(quantity);
-        dto.setUserId(user.getId());
+//        dto.setUserId(user.getId());
         return dto;
     }
 }

@@ -22,6 +22,6 @@ public class RoomDto {
 
     private Available available;
 
-    private Long userId;
-    private List<StockDto> stocks;
+//    private Long userId;
+//    private List<StockDto> stocks;
 }

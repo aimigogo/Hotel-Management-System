@@ -18,6 +18,6 @@ public class StockDto {
 
     private Integer quantity;
 
-    private Long userId;
-    private List<RoomDto> rooms;
+//    private Long userId;
+//    private List<RoomDto> rooms;
 }
