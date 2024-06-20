@@ -5,6 +5,7 @@ import hms_backend.entity.enums.Type;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Getter
 @Setter
@@ -20,4 +21,7 @@ public class RoomDto {
     private BigDecimal price;
 
     private Available available;
+
+    private Long userId;
+    private List<StockDto> stocks;
 }
