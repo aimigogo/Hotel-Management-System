@@ -15,7 +15,7 @@ const AddStockItemForm = () => {
     const handleAddStockItem = async (event) => {
         event.preventDefault();
         try {
-            const response = await axios.post('http://localhost:8080/api/auth/createStockItem', {
+            const response = await axios.post('http://localhost:8080/api/stock/createStockItem', {
                 name, quantity
             });
             if (response.data) {
